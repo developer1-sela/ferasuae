@@ -35,7 +35,7 @@ export function Hero() {
         <div ref={bgRef} className="h-[130%] w-full">
           <PhotoPlaceholder
             tone="red"
-            spec="Hero — fighter in full kit, product hero, low key"
+            spec="Hero — live fight, punch connecting, crowd behind ropes"
             index="IMG.01"
             cropMarks={false}
             className="h-full w-full"

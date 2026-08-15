@@ -1,26 +1,196 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   GRAV FIGHT — DESIGN SYSTEM
+   Base: black / white. Accents: red (Shop) and violet (Academy), used
+   sparingly and with intent — CTAs, underlines, glows, dividers.
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gf-ink: #08080a;           /* true background black */
+  --gf-black: #0d0d10;         /* raised surface black */
+  --gf-black-soft: #17171b;    /* card / panel surface */
+  --gf-line: #2a2a2f;          /* hairline borders on dark */
+  --gf-line-soft: #1c1c20;     /* faint dividers on dark */
+
+  --gf-white: #f7f6f2;         /* warm off-white, primary light text/bg */
+  --gf-white-dim: #c8c6c0;     /* secondary text on dark */
+  --gf-white-mute: #8a887f;    /* tertiary / muted text on dark */
+
+  /* ---- Red (Shop / energy) ---- */
+  --gf-red-deep: #4a0505;
+  --gf-red-core: #d1141f;
+  --gf-red-bright: #ff3b3b;
+
+  /* ---- Violet (Academy / intensity) ---- */
+  --gf-violet-deep: #220040;
+  --gf-violet-core: #3f0071;
+  --gf-violet-bright: #9b4dff;
+
+  /* ---- Type scale (fluid) ---- */
+  --gf-text-display-xl: clamp(3.25rem, 3.2vw + 2.4rem, 8.5rem);
+  --gf-text-display-lg: clamp(2.5rem, 2.4vw + 1.8rem, 5.75rem);
+  --gf-text-display-md: clamp(1.9rem, 1.4vw + 1.5rem, 3.25rem);
+  --gf-text-display-sm: clamp(1.4rem, 0.8vw + 1.2rem, 2rem);
+  --gf-text-eyebrow: clamp(0.7rem, 0.2vw + 0.65rem, 0.8rem);
+
+  /* ---- Rhythm ---- */
+  --gf-section-y: clamp(4.5rem, 6vw, 8.5rem);
+  --gf-container-x: clamp(1.25rem, 4vw, 4rem);
+
+  --background: var(--gf-ink);
+  --foreground: var(--gf-white);
 }
 
 @theme inline {
+  --color-ink: var(--gf-ink);
+  --color-black: var(--gf-black);
+  --color-black-soft: var(--gf-black-soft);
+  --color-line: var(--gf-line);
+  --color-line-soft: var(--gf-line-soft);
+
+  --color-white: var(--gf-white);
+  --color-white-dim: var(--gf-white-dim);
+  --color-white-mute: var(--gf-white-mute);
+
+  --color-red-deep: var(--gf-red-deep);
+  --color-red-core: var(--gf-red-core);
+  --color-red-bright: var(--gf-red-bright);
+
+  --color-violet-deep: var(--gf-violet-deep);
+  --color-violet-core: var(--gf-violet-core);
+  --color-violet-bright: var(--gf-violet-bright);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-arabic: var(--font-arabic);
+
+  --text-display-xl: var(--gf-text-display-xl);
+  --text-display-lg: var(--gf-text-display-lg);
+  --text-display-md: var(--gf-text-display-md);
+  --text-display-sm: var(--gf-text-display-sm);
+  --text-eyebrow: var(--gf-text-eyebrow);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-marquee-slow: marquee 60s linear infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    border-color: var(--gf-line);
+  }
+
+  html {
+    background: var(--gf-ink);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--gf-ink);
+    color: var(--gf-white);
+    font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html[dir="rtl"] body {
+    font-family: var(--font-arabic), var(--font-body), ui-sans-serif, sans-serif;
+  }
+
+  ::selection {
+    background: var(--gf-red-core);
+    color: var(--gf-white);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display), ui-sans-serif, sans-serif;
+    letter-spacing: 0;
+    line-height: 1.04;
+    text-transform: uppercase;
+  }
+
+  html[dir="rtl"] h1,
+  html[dir="rtl"] h2,
+  html[dir="rtl"] h3,
+  html[dir="rtl"] h4 {
+    font-family: var(--font-arabic), sans-serif;
+    font-weight: 800;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.15;
+  }
+}
+
+@layer utilities {
+  .container-gf {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: var(--gf-container-x);
+  }
+
+  .section-y {
+    padding-block: var(--gf-section-y);
+  }
+
+  .text-display-xl { font-size: var(--gf-text-display-xl); }
+  .text-display-lg { font-size: var(--gf-text-display-lg); }
+  .text-display-md { font-size: var(--gf-text-display-md); }
+  .text-display-sm { font-size: var(--gf-text-display-sm); }
+
+  .text-eyebrow {
+    font-size: var(--gf-text-eyebrow);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  html[dir="rtl"] .text-eyebrow {
+    letter-spacing: 0.02em;
+  }
+
+  /* Grain overlay — subtle film-grain texture over dark sections */
+  .grain-overlay {
+    position: relative;
+    isolation: isolate;
+  }
+  .grain-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 180px 180px;
+  }
+
+  .glow-red {
+    box-shadow: 0 0 0 1px var(--gf-red-core), 0 0 40px -8px var(--gf-red-core);
+  }
+  .glow-violet {
+    box-shadow: 0 0 0 1px var(--gf-violet-core), 0 0 40px -8px var(--gf-violet-core);
+  }
+
+  .text-stroke {
+    -webkit-text-stroke: 1.5px var(--gf-white-mute);
+    color: transparent;
+  }
+
+  .fade-mask-b {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
 }

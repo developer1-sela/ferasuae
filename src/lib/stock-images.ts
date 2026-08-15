@@ -14,7 +14,9 @@ function unsplash(id: string, w = 1600) {
 }
 
 export const stockImages = {
-  heroShop: unsplash("1495555687398-3f50d6e79e1e"), // real fight — punch connecting, red gloves/headgear, crowd behind ropes
+  // Note: the Home hero no longer uses a still image — see
+  // public/videos/hero-fight.mp4 (+ poster) instead, per Firas's request
+  // for the hero to be real fight footage, not a photo.
   gatewayAcademy: unsplash("1517438322307-e67111335449"), // coach + fighter, pad work
   gymInterior: unsplash("1716307035615-1c6465a32ef2"), // heavy bag row, boxing club interior
   productRashguard: unsplash("1780476870853-59dbb8765869"), // kicker in ring, action

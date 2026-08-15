@@ -1,18 +1,26 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/lib/i18n/locale-context";
-import { stockImages } from "@/lib/stock-images";
-import { PhotoPlaceholder } from "../ui/photo-placeholder";
 import { ButtonLink } from "../ui/button-link";
 import { ChevronDown } from "../ui/icons";
 
 export function Hero() {
   const { t } = useLocale();
   const bgRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // One-time read of a client-only media query — can't be a lazy
+    // useState initializer without risking a hydration mismatch on the
+    // video's `autoPlay` attribute (SSR always renders the same markup;
+    // this corrects it post-hydration, same pattern as locale-context.tsx).
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setReducedMotion(mq.matches);
+    if (mq.matches) return;
+
     let raf = 0;
     const onScroll = () => {
       cancelAnimationFrame(raf);
@@ -32,15 +40,18 @@ export function Hero() {
   return (
     <section className="relative h-[100dvh] min-h-[640px] w-full overflow-hidden bg-ink">
       <div className="absolute inset-0 overflow-hidden">
-        <div ref={bgRef} className="h-[130%] w-full">
-          <PhotoPlaceholder
-            tone="red"
-            spec="Hero — live fight, punch connecting, crowd behind ropes"
-            index="IMG.01"
-            cropMarks={false}
-            className="h-full w-full"
-            src={stockImages.heroShop}
-            sizes="100vw"
+        <div ref={bgRef} className="grain-overlay h-[130%] w-full">
+          <video
+            ref={videoRef}
+            className="h-full w-full object-cover"
+            src="/videos/hero-fight.mp4"
+            poster="/videos/hero-fight-poster.jpg"
+            autoPlay={!reducedMotion}
+            loop
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
           />
         </div>
       </div>
